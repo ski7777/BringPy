@@ -12,11 +12,15 @@ class BringPy(Bring):
         Bring.__init__(self)
 
     def openShoppingList(self, name):
+        # open shopping list by name
         index = -1
+        # loop through avaible list names to find list index
         for i, l in enumerate(self.getShoppingLists()):
             if l['name'] == name:
                 index = i
                 break
+        # exit if name not found
         if index == -1:
             raise KeyError
+        # open shopping list
         Bring.openShoppingList(self, index)
