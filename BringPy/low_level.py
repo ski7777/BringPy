@@ -92,3 +92,23 @@ class Bring:
         self.clearSearchBar()
         SearchBar = self.driver.find_element_by_class_name('bring-list-search-bar-input')
         SearchBar.send_keys(text)
+
+    def searchItems(self, text):
+        # search for items
+        # type into search bar
+        self.typeInSearchBar(text)
+        # wait for processing
+        time.sleep(0.1)
+        rawList = self.driver.find_element_by_tag_name('bring-item-search-result').find_elements_by_class_name('bring-list-item-content')
+        items = {}
+        # loop through the items
+        for e in rawList:
+            # get item
+            name = e.find_element_by_class_name('bring-list-item-name').text
+            items[name] = {}
+            # get item label classes to determine whether it is to purchase
+            if 'not-selected' in e.get_attribute('class'):
+                items[name]['to-purchase'] = False
+            else:
+                items[name]['to-purchase'] = True
+        return(items)
