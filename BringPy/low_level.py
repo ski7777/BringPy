@@ -78,3 +78,17 @@ class Bring:
                 items[name]['description'] = descriptionLabel.text
             items[name]['to-purchase'] = True
         return(items)
+
+    def clearSearchBar(self):
+        # clear the search bar
+        try:
+            self.driver.find_element_by_class_name('bring-list-search-bar-clear').click()
+        except seleniumExceptions.NoSuchElementException:
+            pass
+
+    def typeInSearchBar(self, text):
+        # type text in search SearchBar
+        # clear search bar
+        self.clearSearchBar()
+        SearchBar = self.driver.find_element_by_class_name('bring-list-search-bar-input')
+        SearchBar.send_keys(text)
