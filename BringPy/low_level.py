@@ -34,3 +34,18 @@ class Bring:
                     pass
             return
         self.driver.find_element_by_xpath(xpath).click()
+
+    def getShoppingLists(self):
+        shoppingLists = []
+        for l in self.driver.find_elements_by_class_name('bring-list-selector-entry'):
+            data = {}
+            data['name'] = l.find_element_by_class_name('bring-list-selector-list-name').text
+            data['count'] = int(l.find_element_by_class_name('bring-list-selector-list-item-count').text)
+            classes = l.find_element_by_class_name('bring-list-selector-list-name').get_attribute('class')
+            if 'selected' in classes:
+                data['active'] = True
+            else:
+                data['active'] = False
+            shoppingLists.append(data)
+        return(shoppingLists)
+
