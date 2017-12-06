@@ -49,3 +49,5 @@ class Bring:
             shoppingLists.append(data)
         return(shoppingLists)
 
+    def openShoppingList(self, index):
+        self.driver.find_elements_by_class_name('bring-list-selector-entry')[index].click()
