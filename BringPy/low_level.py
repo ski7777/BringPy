@@ -62,3 +62,19 @@ class Bring:
         # open shopping list by list index
         # check the index right before calling this command! (And maybe after)
         self.driver.find_elements_by_class_name('bring-list-selector-entry')[index].click()
+
+    def getShoppingListItems(self):
+        # get all to purcahse items on active shopping list
+        rawList = self.driver.find_element_by_class_name('bring-list-item-container-to-purchase').find_elements_by_class_name('bring-list-item-content')
+        items = {}
+        # loop through the items
+        for e in rawList:
+            # get the name
+            name = e.find_element_by_class_name('bring-list-item-name').text
+            items[name] = {}
+            # get description label classes to determine whether description label is avaible
+            descriptionLabel = e.find_element_by_class_name('bring-list-item-specification-label')
+            if 'empty' not in descriptionLabel.get_attribute('class'):
+                items[name]['description'] = descriptionLabel.text
+            items[name]['to-purchase'] = True
+        return(items)
