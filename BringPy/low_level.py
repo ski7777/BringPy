@@ -20,3 +20,17 @@ class Bring:
             if 'https://web.getbring.com/app/lists/' in self.driver.current_url:
                 break
             time.sleep(1)
+        self.clickThisByXPath('//*[@id="cdk-overlay-0"]/md-dialog-container/intro-screen-host/div/div/button', waitUntilAvaible=True)
+        self.clickThisByXPath('//*[@id="cdk-overlay-0"]/md-dialog-container/intro-screen-host/div/bring-intro-push/div/div[2]/button[1]', waitUntilAvaible=True)
+
+    def clickThisByXPath(self, xpath, waitUntilAvaible=False):
+        if waitUntilAvaible:
+            found = False
+            while not found:
+                try:
+                    self.clickThisByXPath(xpath)
+                    found = True
+                except seleniumExceptions.NoSuchElementException:
+                    pass
+            return
+        self.driver.find_element_by_xpath(xpath).click()
